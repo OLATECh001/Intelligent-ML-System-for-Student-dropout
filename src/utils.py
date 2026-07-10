@@ -1,21 +1,18 @@
-import sys
 import os
-
-import numpy as np
-import pandas as pd
-import dill
+import sys
+import joblib
 
 from src.exception import CustomException
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 
 
 def save_object(file_path, obj):
     try:
+        # Create directory if it doesn't exist
         dir_path = os.path.dirname(file_path)
         os.makedirs(dir_path, exist_ok=True)
 
-        with open(file_path, 'wb') as file_obj:
-            dill.dump(obj, file_obj)
+        # Save object using joblib (better for sklearn objects)
+        joblib.dump(obj, file_path)
 
     except Exception as e:
         raise CustomException(e, sys)
@@ -23,8 +20,8 @@ def save_object(file_path, obj):
 
 def load_object(file_path):
     try:
-        with open(file_path, 'rb') as file_obj:
-            return dill.load(file_obj)
+        # Load object using joblib (better for sklearn objects)
+        return joblib.load(file_path)
 
     except Exception as e:
         raise CustomException(e, sys)

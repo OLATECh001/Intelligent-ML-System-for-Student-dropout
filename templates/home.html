@@ -35,19 +35,6 @@
             </select>
         </div>
 
-        <!-- Admission Year -->
-        <div class="form-group">
-            <label>Admission Year</label>
-            <select name="Admission_Year" required>
-                <option selected disabled value="">Select Admission Year</option>
-                <option value="0">2021/2022</option>
-                <option value="1">2022/2023</option>
-                <option value="2">2023/2024</option>
-                <option value="3">2024/2025</option>
-                <option value="4">2025/2026</option>
-            </select>
-        </div>
-
         <!-- Faculty -->
         <div class="form-group">
             <label>Faculty</label>
@@ -105,7 +92,7 @@
 
         <!-- Participation in Clubs/Activities -->
         <div class="form-group">
-            <label>Participation in Clubs/Activities</label>
+            <label>Participation in Social Activities</label>
             <select name="Participation_in_Social_Activities" required>
                 <option selected disabled value="">Select Participation</option>
                 <option value="0">No</option>
@@ -231,17 +218,33 @@
     </form>
 
 <!-- prediction Results -->
-    {% if prediction_text %}
-        <div class="result">
-            <h2>Prediction Result:</h2>
-            <p>{{ prediction_text }}</p>
-            
-        </div>
-    {% endif %}
+   <!-- Prediction Results Section -->
+{% if prediction_text %}
+    <div class="result-container" style="margin-top: 30px; font-size: 18px; text-align: center; padding: 20px; border-radius: 8px; border: 2px solid {% if alert_class == 'danger' %}#ff4d4d{% else %}#2ecc71{% endif %}; background-color: {% if alert_class == 'danger' %}#fff5f5{% else %}#fafffa{% endif %};">
+        
+        <h2 style="color: #333;">Prediction Analysis Outcome:</h2>
+        
+        <!-- Status Heading -->
+        <h3 style="color: {% if alert_class == 'danger' %}#d9534f{% else %}#5cb85c{% endif %};">
+            {{ prediction_text }}
+        </h3>
+
+        <!-- Confidence and Message -->
+        <p style="font-size: 1.1em;"><strong>Details:</strong> {{ display_message | safe }}</p>
+        
+        <hr style="border: 0; border-top: 1px solid #eee;">
+        
+        <!-- Recommendation -->
+        <p style="font-size: 1em; font-style: italic; color: #555;">
+            <strong>Suggested Action:</strong> {{ recommendation }}
+        </p>
+        
+    </div>
+{% endif %}
 
     <footer text-align="center">
         <div class="foot">
-        <p>@2026 Final Year MLOps Project | Olamide Rasheed</p>
+        <!-- <p>@2026 Final Year MLOps Project | Olamide Rasheed</p> -->
          </div>
     </footer>
 </div> 

@@ -2,11 +2,14 @@ import os
 import sys
 import pandas as pd
 
-from src.exception import CustomException
-from src.logger import logging
-from dataclasses import dataclass
+# Add the project root to sys.path to ensure imports work
+sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
 
 from sklearn.model_selection import train_test_split
+from dataclasses import dataclass
+
+from src.exception import CustomException
+from src.logger import logging
 
 
 @dataclass
@@ -21,24 +24,28 @@ class DataIngestion:
         self.ingestion_config = DataIngestionConfig()
 
     def initiate_data_ingestion(self):
-        logging.info("Entered data ingestion method")
+        logging.info("Data Ingestion started")
 
         try:
-            # ✅ Correct file loading
-            df = pd.read_csv(os.path.join("notebook", "data", "preprocessed_data().csv"))
+            file_path = os.path.join("notebook", "data", "preprocessed_data().csv")
+            df = pd.read_csv(file_path)
             logging.info("Dataset loaded successfully")
 
             os.makedirs(os.path.dirname(self.ingestion_config.train_data_path), exist_ok=True)
 
-            # Save raw copy
-            df.to_csv(self.ingestion_config.raw_data_path, index=False, header=True)
+            # Save raw data
+            df.to_csv(self.ingestion_config.raw_data_path, index=False)
 
-            logging.info("Train-test split started")
+            # Train-test split
+            train_set, test_set = train_test_split(
+                df,
+                test_size=0.2,
+                random_state=42,
+                stratify=df["Dropout_Risk"],
+            )
 
-            train_set, test_set = train_test_split(df, test_size=0.2, random_state=42)
-
-            train_set.to_csv(self.ingestion_config.train_data_path, index=False, header=True)
-            test_set.to_csv(self.ingestion_config.test_data_path, index=False, header=True)
+            train_set.to_csv(self.ingestion_config.train_data_path, index=False)
+            test_set.to_csv(self.ingestion_config.test_data_path, index=False)
 
             logging.info("Data ingestion completed")
 
@@ -49,11 +56,11 @@ class DataIngestion:
 
         except Exception as e:
             raise CustomException(e, sys)
-
+        
 if __name__ == "__main__":
     obj = DataIngestion()
     train_path, test_path = obj.initiate_data_ingestion()
 
-    print("Data ingestion completed!")
-    print("Train file:", train_path)
-    print("Test file:", test_path)
+    print("Data Ingestion Completed!")
+    print(f"Train file saved at: {train_path}")
+    print(f"Test file saved at: {test_path}")
