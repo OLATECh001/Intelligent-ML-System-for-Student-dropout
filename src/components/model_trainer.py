@@ -15,8 +15,14 @@ from src.exception import CustomException
 from src.logger import logging
 from src.utils import load_object, save_object
 from sklearn.metrics import (
-    recall_score, precision_score, f1_score, roc_auc_score, 
-    confusion_matrix, accuracy_score
+    accuracy_score,
+    precision_score,
+    recall_score,
+    f1_score,
+    roc_auc_score,
+    average_precision_score,
+    classification_report,
+    confusion_matrix
 )
 from catboost import CatBoostClassifier
 from sklearn.ensemble import RandomForestClassifier
@@ -30,7 +36,7 @@ class ModelTrainerConfig:
     threshold_file_path: str = os.path.join("artifacts", "threshold.npy")
     test_data_path: str = os.path.join("artifacts", "test.csv")
     target_column_name: str = "Dropout_Risk"
-    default_threshold: float = 0.2
+    default_threshold: float = 0.4
 
 
 class ModelTrainer:
@@ -190,7 +196,7 @@ class ModelTrainer:
                 transformed_features = transformed_features.toarray()
             return transformed_features
 
-        categorical_columns = ['Faculty', 'Financial_Support_Source', 'Admission_Year']
+        categorical_columns = ['Faculty', 'Financial_Support_Source']
         present_categorical = [c for c in categorical_columns if c in input_features.columns]
         if present_categorical:
             input_features = pd.get_dummies(input_features, columns=present_categorical, drop_first=True)
@@ -222,7 +228,7 @@ class ModelTrainer:
     def _threshold_report(self, y_test, y_score):
         report = {}
 
-        for threshold in np.arange(0.5, 0.96, 0.05):
+        for threshold in np.arange(0.10, 0.91, 0.05):
             y_pred = (y_score >= threshold).astype(int)
             report[round(float(threshold), 2)] = {
                 "recall": recall_score(y_test, y_pred, zero_division=0),

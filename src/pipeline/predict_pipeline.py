@@ -25,7 +25,7 @@ class PredictPipeline:
         if os.path.exists(threshold_path):
             return float(np.load(threshold_path))
 
-        return 0.8
+        return 0.4
 
     def _prepare_features(self, features):
         expected_features = getattr(self.model, "feature_names_in_", None)
