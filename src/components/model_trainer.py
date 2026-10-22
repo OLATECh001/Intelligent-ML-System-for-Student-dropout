@@ -2,7 +2,7 @@ import os
 import sys
 
 # Add the project root to sys.path to ensure imports work
-sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
 
 from dataclasses import dataclass
 
@@ -35,6 +35,7 @@ class ModelTrainerConfig:
     scaler_file_path: str = os.path.join("artifacts", "scaler.pkl")
     threshold_file_path: str = os.path.join("artifacts", "threshold.npy")
     test_data_path: str = os.path.join("artifacts", "test.csv")
+    confusion_matrix_path: str = os.path.join("artifacts", "confusion_matrix.png")
     target_column_name: str = "Dropout_Risk"
     default_threshold: float = 0.4
 
@@ -118,12 +119,14 @@ class ModelTrainer:
             
             # Initialize and train Random Forest model
             model = RandomForestClassifier(
-                n_estimators=200,
+                n_estimators=100,
                 min_samples_split=2,
-                min_samples_leaf=2,
-                max_features='sqrt',
-                max_depth=10,
-                random_state=42
+                min_samples_leaf=1,
+                max_features='log2',
+                max_depth=30,
+                class_weight='balanced',
+                random_state=42,
+                n_jobs=-1
             )
             
             logging.info("Training Random Forest model")
@@ -136,8 +139,8 @@ class ModelTrainer:
             )
             logging.info(f"Model saved at {self.model_trainer_config.trained_model_file_path}")
             
-            # Use threshold of 0.2 as per notebook optimization
-            threshold = 0.2
+            # Use the selected Random Forest threshold from the notebook evaluation.
+            threshold = 0.4
             logging.info(f"Using optimized threshold: {threshold}")
             
             # Save the threshold
@@ -240,6 +243,38 @@ class ModelTrainer:
 
         return report
 
+    def plot_confusion_matrix(self, cm):
+        try:
+            import matplotlib
+            matplotlib.use("Agg")
+            import matplotlib.pyplot as plt
+            import seaborn as sns
+
+            os.makedirs(os.path.dirname(self.model_trainer_config.confusion_matrix_path), exist_ok=True)
+
+            plt.figure(figsize=(7, 6))
+            sns.heatmap(
+                cm,
+                annot=True,
+                fmt="d",
+                cmap="Blues",
+                xticklabels=["Predicted Stable", "Predicted At-Risk"],
+                yticklabels=["Actual Stable", "Actual At-Risk"],
+                cbar=False,
+            )
+            plt.title("Confusion Matrix - Random Forest Selected Model")
+            plt.xlabel("Predicted Label")
+            plt.ylabel("True Label")
+            plt.tight_layout()
+            plt.savefig(self.model_trainer_config.confusion_matrix_path, dpi=300)
+            plt.close()
+
+            logging.info(f"Confusion matrix plot saved at {self.model_trainer_config.confusion_matrix_path}")
+            return self.model_trainer_config.confusion_matrix_path
+
+        except Exception as e:
+            raise CustomException(e, sys)
+
     def evaluate_model(self, test_path=None):
         try:
             logging.info("Loading saved model")
@@ -282,6 +317,7 @@ class ModelTrainer:
                 "threshold": threshold,
                 "prediction_counts": prediction_counts,
                 "confusion_matrix": cm.tolist(),
+                "confusion_matrix_path": self.plot_confusion_matrix(cm),
             }
 
             if hasattr(model, "classes_"):
