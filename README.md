@@ -195,12 +195,20 @@ Final-Year-ML-Project/
 │   │   └── model_trainer.py
 │   │
 │   └── pipeline/
-│       └── ...
-│
-├── app.py
+│   │   ├── exception.py
+│   │   ├── logger.py
+│   │   └── utils.py
+├── static/
+│   ├── style.css
+├── template/
+│   ├── home.html
+│   └── index.html
+├── .gitignore
+├── application.py
+├── LICENSE
 ├── README.md
 ├── requirements.txt
-└── .gitignore
+└── setup.py
 ```
 
 **Note:** Keep private datasets, virtual environments, logs, and generated model artifacts out of version control unless there is a clear reason to include them. Use a suitable `.gitignore` file.
