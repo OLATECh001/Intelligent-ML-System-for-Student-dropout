@@ -66,7 +66,7 @@ Random Forest was ultimately selected for the deployed system after hyperparamet
 
 ## 📂 Dataset Description
 
-The study used primary data collected through a structured questionnaire administered to students at LAUTECH.
+The study used 648 responses primary data collected through a structured questionnaire administered to students at LAUTECH.
 
 The dataset covers several categories of student characteristics:
 
@@ -160,14 +160,13 @@ The application is intended as a prototype decision-support tool for academic ad
 
 ## Application Screenshots
 
-
 ### At-Risk Prediction
 
-("images/at-risk-prediction.png")
+![At-Risk Prediction](./images/at-risk-prediction.png)
 
 ### Stable Academic Progress
 
-("images/stable-academic-progress.png")
+![Stable Academic Progress](./images/stable-academic-progress.png)
 
 
 ## 🏗️ Project Structure
@@ -236,13 +235,11 @@ python -m venv .venv
 
 ### 3. Install Dependencies
 
-If the repository contains a `requirements.txt` file:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-Ensure the dependency versions match the environment used to train and run the application.
 
 ### 4. Run the Application
 
