@@ -160,11 +160,7 @@ The application is intended as a prototype decision-support tool for academic ad
 
 ### Application Screenshots
 
-Add your actual application screenshots here after uploading them to the repository.
 
-For example, if you store the images in `images/`:
-
-```markdown
 ### At-Risk Prediction
 
 ![At-Risk Prediction]("at-risk-prediction.png")
@@ -172,7 +168,7 @@ For example, if you store the images in `images/`:
 ### Stable Academic Progress
 
 ![Stable Academic Progress]("stable-academic-progress.png")
-```
+
 
 ## 🏗️ Project Structure
 
