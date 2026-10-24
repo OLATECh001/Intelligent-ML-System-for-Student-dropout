@@ -158,7 +158,7 @@ The interface also presents a prediction probability, contributing factors, and 
 
 The application is intended as a prototype decision-support tool for academic advisors and student-support personnel. Predictions should be reviewed alongside relevant student circumstances before any intervention is made.
 
-### Application Screenshots
+## Application Screenshots
 
 
 ### At-Risk Prediction
