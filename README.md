@@ -167,11 +167,11 @@ For example, if you store the images in `images/`:
 ```markdown
 ### At-Risk Prediction
 
-![At-Risk Prediction]("C:\Users\HomePC\Pictures\Screenshots\Screenshot 2026-09-11 114222.png")
+![At-Risk Prediction]("at-risk-prediction.png")
 
 ### Stable Academic Progress
 
-![Stable Academic Progress]("C:\Users\HomePC\Pictures\Screenshots\Screenshot 2026-09-11 114357.png")
+![Stable Academic Progress]("stable-academic-progress.png")
 ```
 
 ## 🏗️ Project Structure
