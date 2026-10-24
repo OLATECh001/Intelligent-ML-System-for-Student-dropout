@@ -163,11 +163,11 @@ The application is intended as a prototype decision-support tool for academic ad
 
 ### At-Risk Prediction
 
-![At-Risk Prediction]("at-risk-prediction.png")
+![At-Risk Prediction]("images/at-risk-prediction.png")
 
 ### Stable Academic Progress
 
-![Stable Academic Progress]("stable-academic-progress.png")
+![Stable Academic Progress]("images/stable-academic-progress.png")
 
 
 ## 🏗️ Project Structure
