@@ -79,47 +79,30 @@ However, a model evaluated primarily on accuracy may overlook students in the mi
 This project addresses these challenges by developing a comparative machine learning framework that:
 
 - Investigates student characteristics associated with dropout intention.
-
 - Evaluates nine classification algorithms.
-
 - Addresses class imbalance without applying SMOTE to the held-out test set.
-
 - Prioritizes at-risk detection through recall, Precision-Recall AUC, and threshold adjustment.
-
 - Uses SHAP to explain global feature importance and individual predictions.
-
 - Integrates the selected model into a Flask-based web application.
 
 ## 🎯 Project Objectives
 
 1. Identify demographic, academic, financial, social, and health-related factors associated with student dropout intention.
-
 2. Build and compare multiple machine learning classifiers under consistent experimental conditions.
-
 3. Address class imbalance and optimize promising models to improve at-risk student detection.
-
 4. Apply explainable AI techniques to understand model predictions.
-
 5. Develop a web-based decision-support system that presents predictions, contributing factors, and suggested interventions.
 
 ## ✨ Key Features
 
 - **Comparative machine learning:** Evaluation of nine classification algorithms.
-
 - **Data preprocessing:** Missing-value handling, duplicate checks, and exploratory analysis.
-
 - **Class imbalance handling:** SMOTE applied exclusively to training data.
-
 - **Model optimization:** Randomized hyperparameter search with five-fold cross-validation.
-
 - **Threshold adjustment:** Decision thresholds selected for the tuned candidate models.
-
 - **Comprehensive evaluation:** Accuracy, precision, recall, F1-score, ROC-AUC, and PR-AUC.
-
 - **Explainable AI:** SHAP global and local prediction explanations.
-
 - **Flask deployment:** Browser-based student profile submission and prediction.
-
 - **Actionable outputs:** Risk classification, prediction probability, contributing factors, and suggested interventions.
 
 ## 📊 Dataset Description
@@ -169,29 +152,17 @@ The dataset was cleaned before modeling. The paper reports mode imputation for m
 The project follows a workflow informed by the Cross-Industry Standard Process for Data Mining (CRISP-DM).
 
 1. **Problem definition:** Define student dropout intention prediction as a binary classification task.
-
 2. **Data collection:** Gather questionnaire responses from students at LAUTECH.
-
 3. **Data cleaning:** Inspect missing values, duplicate entries, outliers, and irrelevant columns.
-
 4. **Exploratory Data Analysis:** Examine distributions, descriptive statistics, relationships, and potential risk patterns.
-
 5. **Preprocessing:** Apply the documented missing-value treatment and prepare features for modeling.
-
 6. **Data splitting:** Use stratified training and testing partitions.
-
 7. **Class imbalance handling:** Apply SMOTE exclusively to the training data.
-
 8. **Baseline model training:** Evaluate nine candidate classifiers.
-
 9. **Hyperparameter optimization:** Tune Random Forest, CatBoost, and XGBoost.
-
 10. **Threshold adjustment:** Evaluate decision thresholds for the tuned models.
-
 11. **Model evaluation:** Compare classification metrics, ROC-AUC, PR-AUC, and confusion matrices.
-
 12. **Explainability:** Apply SHAP to interpret global model behavior and an individual prediction.
-
 13. **Deployment:** Integrate the selected model into a Flask web application.
 
 ## 🔍 Exploratory Data Analysis
@@ -201,15 +172,10 @@ Exploratory Data Analysis (EDA) was conducted to investigate the dataset and und
 The analysis considered:
 
 - Descriptive statistics and frequency distributions.
-
 - Class distribution and the extent of class imbalance.
-
 - Academic characteristics, including CGPA, attendance, and study hours.
-
 - Financial support, parental educational background, and internet access.
-
 - Health challenges, academic support, and school-related stress.
-
 - Visualizations and relationships among selected features.
 
 These analyses provided context for the modeling stage and helped characterize the data used to develop the early-warning system.
@@ -230,13 +196,11 @@ To address this imbalance, the study applied **Synthetic Minority Over-sampling 
 The resampled training set contained 946 observations, with 473 observations in each class.
 
 SMOTE was restricted to the training partition. The held-out test set remained unchanged so that final evaluation reflected the original class distribution rather than an artificially balanced test set.
-
 This distinction is important because oversampling the test data would compromise the validity of the final evaluation.
 
 ## 📈 Baseline Model Comparison
 
 Nine supervised machine learning classifiers were evaluated using the same training and held-out test partitions.
-
 The models covered linear, tree-based, ensemble, boosting-based, and kernel-based learning approaches.
 
 ### 📋 Baseline Performance Results
@@ -262,9 +226,7 @@ The following table reproduces the baseline comparison reported in the paper. Va
 The baseline results show that performance differed across the evaluation metrics.
 
 - Random Forest recorded the highest reported cross-validated F1-score of **0.9457**.
-
 - XGBoost achieved the highest baseline test recall of **0.6364**.
-
 - CatBoost recorded the highest baseline ROC-AUC of **0.7968** and PR-AUC of **0.4924**.
 
 These differences motivated further optimization of Random Forest, CatBoost, and XGBoost rather than relying on a single baseline metric.
@@ -274,7 +236,6 @@ These differences motivated further optimization of Random Forest, CatBoost, and
 The three selected candidate models were optimized using `RandomizedSearchCV`.
 
 The search procedure sampled 30 parameter combinations per model and used five-fold cross-validation, resulting in 150 candidate evaluations per classifier and 450 evaluations across the three models.
-
 Recall maximization was used as the stated cross-validation selection objective.
 
 ### 🌲 Random Forest
@@ -331,13 +292,10 @@ Random Forest was selected because the study prioritized identifying students in
 Compared with the other tuned models, Random Forest achieved:
 
 - The highest recall: **63.64%**.
-
 - The highest ROC-AUC: **78.95%**, narrowly above CatBoost.
-
 - The highest PR-AUC: **51.52%**.
 
 CatBoost achieved higher test accuracy, precision, and F1-score. However, Random Forest detected a larger proportion of the actual at-risk cases, which aligned with the intended early-warning use case.
-
 The selection therefore reflects the study's chosen evaluation priorities, rather than a claim that Random Forest was superior on every metric.
 
 ## 🧪 Final Model and Evaluation
@@ -366,59 +324,40 @@ The final test evaluation reported the following classification outcomes:
 | At Risk | 4 | 7 |
 
 The model correctly identified **7 of the 11 actual at-risk cases** in the test set, while missing 4 at-risk cases.
-
 It also generated 11 false-positive predictions. These results illustrate the trade-off between identifying more potentially vulnerable students and incorrectly flagging students who may not be at risk.
-
 The test set contained only 11 at-risk observations. Consequently, the reported recall and other minority-class metrics should be interpreted cautiously and validated using larger, preferably longitudinal datasets.
 
 ## 🧠 Explainable AI with SHAP
 
 A key component of the project is **Explainable Artificial Intelligence (XAI)**. Rather than returning only a risk classification, the system incorporates SHAP to help users understand the factors contributing to model predictions.
-
 SHAP assigns feature contribution values that indicate how individual features influence the model output relative to a baseline.
 
 ### 🌍 Global Explainability
 
 Global SHAP analysis was used to examine the overall influence of input features on the Random Forest predictions.
-
 The project reports class attendance as the most influential feature in the displayed SHAP beeswarm plot. The conclusion also identifies the following important predictors:
-
 - Class attendance.
-
 - Internet access.
-
 - Parental level of education.
-
 - Hours of study per week.
-
 - CGPA range.
 
 The beeswarm plot illustrates how feature values relate to SHAP contributions across observations. Positive SHAP values push the model output toward the at-risk class, while negative values push it away from that class.
-
 These findings represent patterns learned by the model and should not be interpreted as proof that a particular factor causes student dropout.
 
 ### 🔎 Local Explainability
 
 Local SHAP analysis was used to explain the prediction for an individual student.
-
 The project reports an example with a base value of **0.5033** and a final model output of **0.07**. In that example:
-
 - Absence of academic support was the main factor pushing the risk score upward.
-
 - Good class attendance contributed toward a lower score.
-
 - A high CGPA range contributed toward a lower score.
-
 - Higher parental education contributed toward a lower score.
-
 - The reported study-hours value contributed toward a lower score.
-
 - The student's Faculty of Computing and Informatics membership also contributed toward a lower score.
 
 Together, the reported contributions produced a low-risk prediction for that example.
-
 The SHAP force plot provides an instance-level explanation of the model's output, making it easier to inspect how several features combine to influence a prediction.
-
 **Interpretation note:** The paper's example output of 0.07 should not automatically be assumed to be a calibrated probability or the same output scale used by the Flask interface. The implementation should clearly identify the quantity being displayed.
 
 ## 💻 Web Application
@@ -430,15 +369,10 @@ The application accepts a student profile as input and produces a prediction int
 ### ⚙️ Application Capabilities
 
 - Collects student profile information through a web form.
-
 - Processes submitted inputs for model prediction.
-
 - Classifies the student as either **At-risk of Academic Attrition** or **Stable Academic Progress**.
-
 - Displays the model's prediction output.
-
 - Presents influential factors to support interpretation.
-
 - Provides suggested intervention measures to guide follow-up support.
 
 The system is designed as a decision-support tool. Its predictions should complement professional judgment and appropriate student support processes, rather than independently determine access to educational opportunities.
