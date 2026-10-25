@@ -134,48 +134,30 @@ This project addresses these challenges by developing a comparative machine lear
 
 The study used primary data collected through an anonymous structured questionnaire administered to students across ten faculties at LAUTECH, Nigeria.
 
-| Dataset characteristic | Description |
-
-|---|---|
-
+| Dataset Characteristic | Description |
+|:---|:---|
 | Initial submissions | 648 |
-
 | Records retained after cleaning | 646 |
-
 | Predictor features | 17 |
-
 | Learning task | Binary classification |
-
 | Target variable | Dropout Intention |
-
-| Training/testing split | 80% / 20%, stratified |
-
+| Training/testing split | 80% / 20% (stratified) |
 | Training records before SMOTE | 516 |
-
 | Training records after SMOTE | 946 |
-
-| Test set | 130 records, unchanged by SMOTE |
+| Test set | 130 records (unchanged by SMOTE) |
 
 ### 🧩 Feature Categories
 
 The questionnaire covered multiple dimensions of student life.
 
-| Category | Example variables |
-
-|---|---|
-
+| Category | Example Variables |
+|:---|:---|
 | Demographic | Gender, age range |
-
 | Academic | Faculty, level of study, CGPA range, class attendance, weekly study hours |
-
 | Financial and socioeconomic | Parental education, source of financial support, scholarship status |
-
 | Living and connectivity | Accommodation type, internet access |
-
 | Social and institutional | Participation in activities, academic support |
-
 | Health and wellbeing | Health challenges, school-related stress |
-
 | Employment | Working while studying |
 
 The target was formulated as a binary classification problem:
@@ -244,12 +226,9 @@ These analyses provided context for the modeling stage and helped characterize t
 
 The cleaned dataset exhibited a substantial imbalance between the two target classes.
 
-| Training stage | Not at risk | At risk | Total |
-
-|---|---:|---:|---:|
-
+| Training Stage | Not at Risk | At Risk | Total |
+|:---|---:|---:|---:|
 | Before SMOTE | 473 | 43 | 516 |
-
 | After SMOTE | 473 | 473 | 946 |
 
 The at-risk class represented approximately 8.33% of the original training partition.
@@ -272,26 +251,16 @@ The models covered linear, tree-based, ensemble, boosting-based, and kernel-base
 
 The following table reproduces the baseline comparison reported in the paper. Values are shown as reported, with scores expressed as decimals.
 
-| Model | CV F1 | Train Accuracy | Test Accuracy | Precision | Recall | F1-score | ROC-AUC | PR-AUC |
-
-|---|---:|---:|---:|---:|---:|---:|---:|---:|
-
+| Model | CV F1 | Train Accuracy | Test Accuracy | Precision | Recall | F1-Score | ROC-AUC | PR-AUC |
+|:---|---:|---:|---:|---:|---:|---:|---:|---:|
 | XGBoost | 0.9322 | 0.9989 | 0.9077 | 0.4667 | 0.6364 | 0.5385 | 0.7647 | 0.3501 |
-
 | CatBoost | 0.9411 | 0.9947 | 0.9000 | 0.4286 | 0.5455 | 0.4800 | 0.7968 | 0.4924 |
-
 | Random Forest | 0.9457 | 0.9989 | 0.8846 | 0.3333 | 0.3636 | 0.3478 | 0.7781 | 0.4839 |
-
 | AdaBoost | 0.8847 | 0.9186 | 0.8385 | 0.2727 | 0.5455 | 0.3636 | 0.7387 | 0.2364 |
-
 | Gradient Boosting | 0.9246 | 0.9588 | 0.8692 | 0.2857 | 0.3636 | 0.3200 | 0.7876 | 0.3118 |
-
 | Decision Tree | 0.9085 | 0.9989 | 0.8308 | 0.2105 | 0.3636 | 0.2667 | 0.6188 | 0.1304 |
-
 | Support Vector Machine | 0.9267 | 0.9641 | 0.9000 | 0.3750 | 0.2727 | 0.3158 | 0.7517 | 0.2552 |
-
 | Logistic Regression | 0.8805 | 0.8964 | 0.8077 | 0.1500 | 0.2727 | 0.1935 | 0.6914 | 0.2379 |
-
 | Ridge Classifier | 0.8837 | 0.8975 | 0.8154 | 0.1176 | 0.1818 | 0.1429 | 0.7158 | 0.2510 |
 
 *Source: Baseline model comparison reported in the research paper.*
@@ -318,54 +287,33 @@ Recall maximization was used as the stated cross-validation selection objective.
 
 ### 🌲 Random Forest
 
-| Hyperparameter | Selected value |
-
-|---|---|
-
+| Hyperparameter | Selected Value |
+|:---|:---|
 | `n_estimators` | 100 |
-
 | `max_depth` | 30 |
-
 | `min_samples_split` | 2 |
-
 | `min_samples_leaf` | 1 |
-
 | `max_features` | `log2` |
-
 ### 🐈 CatBoost
 
-| Hyperparameter | Selected value |
-
-|---|---|
-
+| Hyperparameter | Selected Value |
+|:---|:---|
 | `iterations` | 500 |
-
 | `learning_rate` | 0.05 |
-
 | `depth` | 10 |
-
 | `l2_leaf_reg` | 9 |
-
 | `border_count` | 64 |
 
 ### 🚀 XGBoost
 
-| Hyperparameter | Selected value |
-
-|---|---|
-
+| Hyperparameter | Selected Value |
+|:---|:---|
 | `n_estimators` | 500 |
-
 | `learning_rate` | 0.2 |
-
 | `max_depth` | 3 |
-
 | `min_child_weight` | 1 |
-
 | `subsample` | 1.0 |
-
 | `colsample_bytree` | 1.0 |
-
 | `gamma` | 0 |
 
 These configurations are the optimal settings reported by the study.
@@ -376,14 +324,10 @@ After hyperparameter tuning and threshold adjustment, the three candidate models
 
 ### 📊 Performance of the Three Tuned Models
 
-| Model | CV F1 | Threshold | Test Accuracy | Precision | Recall | F1-score | ROC-AUC | PR-AUC |
-
-|---|---:|---:|---:|---:|---:|---:|---:|---:|
-
+| Model | CV F1 | Threshold | Test Accuracy | Precision | Recall | F1-Score | ROC-AUC | PR-AUC |
+|:---|---:|---:|---:|---:|---:|---:|---:|---:|
 | Random Forest | 0.9427 | 0.40 | 0.8846 | 0.3889 | 0.6364 | 0.4828 | 0.7895 | 0.5152 |
-
 | CatBoost | 0.9413 | 0.60 | 0.9231 | 0.5556 | 0.4545 | 0.5000 | 0.7869 | 0.4909 |
-
 | XGBoost | 0.9324 | 0.25 | 0.8769 | 0.3529 | 0.5455 | 0.4286 | 0.7410 | 0.3599 |
 
 *Source: Optimized model performance reported in the research paper.*
@@ -411,34 +355,23 @@ The selected Random Forest classifier used a decision threshold of **0.40** for 
 ### 📉 Final Test Performance
 
 | Metric | Result |
-
-|---|---:|
-
+|:---|---:|
 | Accuracy | 88.46% |
-
 | Precision | 38.89% |
-
 | Recall | 63.64% |
-
-| F1-score | 48.28% |
-
+| F1-Score | 48.28% |
 | ROC-AUC | 78.95% |
-
 | PR-AUC | 51.52% |
-
-| Classification threshold | 0.40 |
+| Classification Threshold | 0.40 |
 
 ### 🔢 Confusion Matrix
 
 The final test evaluation reported the following classification outcomes:
 
-| Actual / Predicted | Not at risk | At risk |
-
-|---|---:|---:|
-
-| Not at risk | 108 | 11 |
-
-| At risk | 4 | 7 |
+| Actual / Predicted | Not at Risk | At Risk |
+|:---|---:|---:|
+| Not at Risk | 108 | 11 |
+| At Risk | 4 | 7 |
 
 The model correctly identified **7 of the 11 actual at-risk cases** in the test set, while missing 4 at-risk cases.
 
@@ -532,69 +465,49 @@ The system is designed as a decision-support tool. Its predictions should comple
 
 The following is the presentation of the project structure.
 
-```text
-
 Final-Year-ML-Project/
-
 │
-
 ├── notebook/
-
-│   ├── data/
-
-│   │   ├── preprocessed_data.csv
-
-│   │   └── ...
-
-│   ├── EDA&FE.ipynb
-
-│   └── Model_Building.ipynb
-
+│   ├── data/
+│   │   ├── preprocessed_data.csv
+│   │   └── README.md
+│   │
+│   ├── EDA_FE.ipynb
+│   └── Model_Building.ipynb
 │
-
 ├── src/
-
-│   ├── components/
-
-│   │   ├── data_ingestion.py
-
-│   │   ├── data_transformation.py
-
-│   │   └── model_trainer.py
-
-│   │
-
-│   └── pipeline/
-
-│   │   ├── exception.py
-
-│   │   ├── logger.py
-
-│   │   └── utils.py
-
+│   ├── components/
+│   │   ├── __init__.py
+│   │   ├── data_ingestion.py
+│   │   ├── data_transformation.py
+│   │   └── model_trainer.py
+│   │
+│   ├── pipeline/
+│   │   ├── __init__.py
+│   │   ├── prediction_pipeline.py
+│   │   └── training_pipeline.py
+│   │
+│   ├── exception.py
+│   ├── logger.py
+│   └── utils.py
+│
 ├── static/
-
-│   ├── style.css
-
-├── template/
-
-│   ├── home.html
-
-│   └── index.html
-
+│   └── style.css
+│
+├── templates/
+│   ├── home.html
+│   └── index.html
+│
+├── models/
+│   ├── model.pkl
+│   └── preprocessor.pkl
+│
 ├── .gitignore
-
 ├── application.py
-
 ├── LICENSE
-
 ├── README.md
-
 ├── requirements.txt
-
 └── setup.py
-
-```
 
 ## 📦 Installation and Setup
 
@@ -651,37 +564,21 @@ python application.py
 ## 🧰 Technologies Used
 
 | Technology | Purpose |
-
-|---|---|
-
+|:---|:---|
 | Python | Core programming language |
-
 | Pandas | Data manipulation and analysis |
-
 | NumPy | Numerical computation |
-
 | Matplotlib | Data visualization |
-
 | Scikit-learn | Model training, evaluation, and hyperparameter search |
-
 | imbalanced-learn | SMOTE class balancing |
-
 | XGBoost | Gradient-boosted tree classifier |
-
 | CatBoost | Gradient-boosted classifier |
-
 | SHAP | Global and local explainability |
-
 | Flask | Web application and prediction interface |
-
 | HTML and CSS | Front-end structure and styling |
-
 | Jupyter Notebook | Data exploration and experimentation |
-
 | Visual Studio Code | Development environment |
-
 | Git and GitHub | Version control and project hosting |
-
 ## ⚠️ Limitations
 
 The project has several limitations that should be considered when interpreting its findings.
