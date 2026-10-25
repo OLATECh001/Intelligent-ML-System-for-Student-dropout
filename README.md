@@ -2,15 +2,7 @@
 
 **An Explainable Machine Learning-Based Early Warning System for Student Dropout Risk Prediction at LAUTECH, Nigeria**
 
-[![Python](https://img.shields.io/badge/Python-3.12-blue.svg)](https://www.python.org/)
-
-[![Machine Learning](https://img.shields.io/badge/Machine%20Learning-Scikit--learn-orange.svg)](https://scikit-learn.org/)
-
-[![Explainable AI](https://img.shields.io/badge/Explainable%20AI-SHAP-purple.svg)](https://shap.readthedocs.io/)
-
-[![Framework](https://img.shields.io/badge/Web%20Framework-Flask-black.svg)](https://flask.palletsprojects.com/)
-
-[![Status](https://img.shields.io/badge/Project-Academic%20Research-green.svg)]()
+[![Python](https://img.shields.io/badge/Python-3.12-blue.svg)](https://www.python.org/) [![Machine Learning](https://img.shields.io/badge/Machine%20Learning-Scikit--learn-orange.svg)](https://scikit-learn.org/) [![Explainable AI](https://img.shields.io/badge/Explainable%20AI-SHAP-purple.svg)](https://shap.readthedocs.io/) [![Framework](https://img.shields.io/badge/Web%20Framework-Flask-black.svg)](https://flask.palletsprojects.com/) [![Status](https://img.shields.io/badge/Project-Academic%20Research-green.svg)]()
 
 ## 📚 Table of Contents
 
